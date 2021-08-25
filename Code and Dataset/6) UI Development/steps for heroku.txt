@@ -1,0 +1,6 @@
+*Make sure to be inside virtual environment*
+pip freeze > requirements.txt
+git init (initially)
+git add .
+git commit -am "commit text"
+git push heroku master
