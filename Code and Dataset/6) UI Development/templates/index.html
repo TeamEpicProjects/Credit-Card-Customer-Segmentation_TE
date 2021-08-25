@@ -1,1 +1,212 @@
+<!doctype html>
+<html lang="en">
 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Credit Card Customer Segmentation</title>
+</head>
+
+<style>
+    .titlestyle {
+        background-color: #212121;
+        color: white;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .title {
+        background-color: white;
+        text-align: center;
+    }
+
+    .formstyle {
+        padding: 20px 20px;
+    }
+
+    .wrapper {
+        text-align: center;
+        font-size: 45px;
+    }
+
+    .variable {
+        color: black;
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+
+<body>
+    <header class="bd-header  py-3 d-flex align-items-stretch border-bottom ">
+        <img src="../static/transparent background logo.png" style="height: 15%; width: 10%; padding-left: 15px;">
+    </header>
+
+    <main class="container size">
+        <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm titlestyle">
+            <div class="lh-1">
+                <h1 class="h2 mb-0 text-black lh-1">Credit Card Customer Segmentation</h1>
+            </div>
+        </div>
+
+        <div class="my-3 p-3 bg-body rounded shadow-sm" style="background-color: #f5f5f5 !important;">
+            <div class="container">
+                <form class="formstyle" action="{{url_for('model')}}" method="post">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Balance</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="BALANCE" class="form-control" required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Balance Frequency</span>
+                                <input type="text" name="BALANCE_FREQUENCY" class="form-control" required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Purchases</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="PURCHASES" class="form-control" required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Oneoff Purchase</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="ONEOFF_PURCHASES" class="form-control" required="required">
+                            </div>
+
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Installment Purchase</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="INSTALLMENTS_PURCHASES" class="form-control"
+                                    required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Cash Advance</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="CASH_ADVANCE" class="form-control" required="required">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Cash Advance Transaction</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="CASH_ADVANCE_TRX" class="form-control" required="required">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Purchase Transaction</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="PURCHASES_TRX" class="form-control" required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Credit Limit</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="CREDIT_LIMIT" class="form-control" required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Payment</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="PAYMENTS" class="form-control" required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Minimum Payment</span>
+                                <span class="input-group-text">$</span>
+                                <input type="text" name="MINIMUM_PAYMENTS" class="form-control" required="required">
+                            </div>
+
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Full Payment</span>
+                                <span class="input-group-text">%</span>
+                                <input type="text" name="PRC_FULL_PAYMENT" class="form-control" required="required">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text variable">Tenure</span>
+                                <input type="text" name="TENURE" class="form-control" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <button type="submit" class="btn btn-primary "
+                            style="font-size: 20px;background-color: rgb(65, 65, 241); font-weight: bold;">Predict</button>
+                    </div>
+                </form>
+                <div class="my-3 p-3 bg-body rounded shadow-sm">
+                    <h4 class="border-bottom pb-2 mb-0" style="font-size: 30px;">Predictions</h4>
+                    <div class="d-flex text-muted pt-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                <div class="d-flex justify-content-between">
+                                    <strong class="text-gray-dark" style="font-size: 23px;">Model 1</strong>
+                                </div><br>
+                                <span class="d-block" style="font-size: 17px;">{{prediction1}}</span><br>
+                                <p style="font-size: 17px; text-align: justify;"><b>Business Insight: </b>{{insight1}}
+                                </p>
+                                <p style="font-size: 17px; text-align: justify;"><b>Business Recommendation:
+                                    </b>{{recommendation1}}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                <div class="d-flex justify-content-between">
+                                    <strong class="text-gray-dark" style="font-size: 23px;">Model 2</strong>
+                                </div><br>
+                                <span class="d-block" style="font-size: 17px;">{{prediction2}}</span><br>
+                                <p style="font-size: 17px; text-align: justify;"><b>Business Insight: </b>{{insight2}}
+                                </p>
+                                <p style="font-size: 17px; text-align: justify;"><b>Business Recommendation:
+                                    </b>{{recommendation2}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="text" style="text-align: center;">
+                        <h3>Model 1</h3>
+                    </div>
+                    <img src="{{url_for('static', filename='model1.png')}}" class="d-block w-100" alt="Model 1">
+                </div>
+                <div class="carousel-item">
+                    <div class="text" style="text-align: center;">
+                        <h3>Model 2</h3>
+                    </div>
+                    <img src="{{url_for('static', filename='model2.png')}}" class="d-block w-100" alt="Model 2">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
